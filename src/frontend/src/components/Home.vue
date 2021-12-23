@@ -64,14 +64,14 @@ export default {
     fetchData(currentPage, name) {
       this.currentPage = currentPage;
       this.name = name;
-      let query =
-        "?page=" +
-        (currentPage - 1) +
-        "&size=" +
-        this.pageSize +
-        "&name=" +
-        name;
-      fetch("api/cities" + query)
+
+      let query = new URLSearchParams({
+        page: currentPage - 1,
+        size: this.pageSize,
+        name: name
+      }).toString();
+
+      fetch("api/cities?" + query)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -84,7 +84,6 @@ export default {
       this.fetchData(currentPage, this.name);
     },
     filter(name) {
-        console.log("Flilter ---->", name)
       this.fetchData(1, name);
     }
   },
