@@ -10,17 +10,17 @@
         class="mb-2 b-card"
         md="3"
       >
-        <b-button id="show-btn" @click="show = true">Open Modal</b-button>
+        <b-button id="show-btn" @click="showDialog">Open Modal</b-button>
 
         <b-modal
-          v-model="show"
+          centered
           ref="edit-dialog"
           title="Edit city"
+          ok-title="Save"
           @hidden="close"
-          @show="showDialog"
           @ok="save"
         >
-          <form ref="form" @submit.stop.prevent="handleSubmit">
+          <b-form ref="form" @submit.stop.prevent="save">
             <b-form-group
               label="Name"
               label-for="name-input"
@@ -38,12 +38,12 @@
               invalid-feedback="Photo is required"
             >
               <b-form-input
-                id="Photo-input"
+                id="photo-input"
                 v-model="modalPhoto"
                 required
               ></b-form-input>
             </b-form-group>
-          </form>
+          </b-form>
         </b-modal>
       </b-card>
     </b-col>
@@ -51,16 +51,15 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "CityCard",
   props: ["id", "name", "photo"],
   data() {
     return {
-      show: false,
-      modalName: '',
-      modalPhoto: '',
+      modalName: "",
+      modalPhoto: "",
     };
   },
   methods: {
@@ -86,13 +85,11 @@ export default {
         photo: this.modalPhoto
       }).toString();
 
-      axios
-        .put("api/cities/" + this.id + "?" + query)
-        .then(() => {
-          this.name = this.modalName;
-          this.photo = this.modalPhoto;
-          this.close();
-        });
+      axios.put("api/cities/" + this.id + "?" + query).then(() => {
+        this.name = this.modalName;
+        this.photo = this.modalPhoto;
+        this.close();
+      });
     },
   },
 };
