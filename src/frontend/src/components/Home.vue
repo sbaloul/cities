@@ -17,6 +17,7 @@
         <city-card
           v-for="city in cities"
           :key="city.id"
+          :id="city.id"
           :name="city.name"
           :photo="city.photo"
         ></city-card>
