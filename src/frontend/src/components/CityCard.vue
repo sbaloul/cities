@@ -53,13 +53,18 @@
 <script>
 export default {
   name: "CityCard",
-  props: ["name", "photo", "modalName", "modalPhoto"],
+  props: ["name", "photo"],
   data() {
     return {
       show: false,
+      modalName: 's', 
+      modalPhoto: ''
     };
   },
   methods: {
+    checkFormValidity() {
+      return this.$refs.form.checkValidity();
+    },
     showDialog() {
       this.modalName = this.name;
       this.modalPhoto = this.photo;
@@ -68,7 +73,11 @@ export default {
     close() {
       this.$refs["edit-dialog"].hide();
     },
-    save() {
+    save(bvModalEvt) {
+      if (!this.checkFormValidity()) {
+        bvModalEvt.preventDefault();
+        return;
+      }
       this.name = this.modalName;
       this.photo = this.modalPhoto;
       this.close();
