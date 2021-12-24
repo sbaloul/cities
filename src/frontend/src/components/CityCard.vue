@@ -51,14 +51,16 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "CityCard",
-  props: ["name", "photo"],
+  props: ["id", "name", "photo"],
   data() {
     return {
       show: false,
-      modalName: 's', 
-      modalPhoto: ''
+      modalName: '',
+      modalPhoto: '',
     };
   },
   methods: {
@@ -78,9 +80,19 @@ export default {
         bvModalEvt.preventDefault();
         return;
       }
-      this.name = this.modalName;
-      this.photo = this.modalPhoto;
-      this.close();
+
+      let query = new URLSearchParams({
+        name: this.modalName,
+        photo: this.modalPhoto
+      }).toString();
+
+      axios
+        .put("api/cities/" + this.id + "?" + query)
+        .then(() => {
+          this.name = this.modalName;
+          this.photo = this.modalPhoto;
+          this.close();
+        });
     },
   },
 };
