@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <b-col>
+    <b-col cols="4">
       <b-card
         :title="name"
         :img-src="photo"
@@ -47,7 +46,6 @@
         </b-modal>
       </b-card>
     </b-col>
-  </div>
 </template>
 
 <script>
@@ -96,8 +94,4 @@ export default {
 </script>
 
 <style scoped>
-.b-card {
-  max-width: 20rem;
-  min-width: 20rem;
-}
 </style>
