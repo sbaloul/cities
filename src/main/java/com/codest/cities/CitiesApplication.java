@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
-@ComponentScan({ "com.codest.cities.controller" })
+@ComponentScan({ "com.codest.cities.controller", "com.codest.cities.security" })
 public class CitiesApplication {
 	private static final Logger LOG = LoggerFactory.getLogger(CitiesApplication.class);
 	
