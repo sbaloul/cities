@@ -14,10 +14,12 @@ public class LogoutHandlerImpl implements LogoutHandler {
 
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-		Cookie cookie = new Cookie("hasEdit", null);
-		cookie.setMaxAge(0);
+		Cookie userCookie = createCookie("user");
+		Cookie editCookie = createCookie("hasEdit");
 
-		response.addCookie(cookie);
+		response.addCookie(userCookie);
+		response.addCookie(editCookie);
+		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			session.invalidate();
@@ -30,4 +32,10 @@ public class LogoutHandlerImpl implements LogoutHandler {
 		}
 	}
 
+	private Cookie createCookie(String name) {
+		Cookie cookie = new Cookie(name, null);
+		cookie.setMaxAge(0);
+		
+		return cookie;
+	}
 }
