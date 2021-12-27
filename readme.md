@@ -21,6 +21,8 @@ $ java -jar target/cities-0.0.1-SNAPSHOT.jar
 
 The default port of the application is 8080, open the following url <a href="http://localhost:8080">localhost:8080</a> to launch the application on the browser.
 
+The browser should open automatically with the correct url but if the browser doesn't appear, open browser with the above url with correct port 
+
 You can change the default port by setting the environment variable **APP_PORT** before executing the application
 
 ### Default Users
