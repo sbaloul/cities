@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +40,26 @@ public class CitiesApplication {
 				LOG.warn("Opening the browser with url '{}' failed!", uriStr);
 			}
 		} else {
-			 LOG.info("Open the flowing url in browser to execute the app: {}", uriStr);
+			String command = null;
+
+			if (SystemUtils.IS_OS_LINUX) {
+				command = "xdg-open " + uriStr;
+			} else if (SystemUtils.IS_OS_WINDOWS) {
+				command = "explorer " + uriStr;
+			} else if (SystemUtils.IS_OS_MAC) {
+				command = "open " + uriStr;
+			}
+
+			if (command != null) {
+				try {
+					Runtime.getRuntime().exec(command);
+				} catch (IOException e) {
+					// We don't need to log anything
+				}
+			}
+
+			LOG.info("Open the flowing url in browser to execute the app if the browser doesn't open automatically: {}",
+					uriStr);
 		}
 	}
 }
