@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="/">Cities</b-navbar-brand>
+      <b-navbar-brand href="/">World Cities</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
@@ -26,7 +26,6 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <h1>Cities</h1>
     <b-container>
       <b-row class="mb-4 justify-content-md-center">
         <b-col cols="8"> </b-col>
