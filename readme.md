@@ -18,3 +18,12 @@ $ git clone https://github.com/sbaloul/cities
 $ mvn package
 $ java -jar target/cities-0.0.1-SNAPSHOT.jar
 ~~~
+
+### Default Users
+
+Note all users have the same password **pass**
+
+User names with roles:
+- **user**: has ROLE_USER role
+- **admin**: has ROLE_ALLOW_EDIT role
+
