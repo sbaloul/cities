@@ -29,8 +29,10 @@ public class WebMvcConfigurerImp implements WebMvcConfigurer {
 			http
 				.csrf().disable()
 					.formLogin()
+					.successHandler(new LoginSuccessHandler())
 				.and()
-					.logout().logoutSuccessUrl("/")
+					.logout()
+					.addLogoutHandler(new LogoutHandlerImpl())
 				.and()
 				.authorizeHttpRequests()
 					.antMatchers(HttpMethod.PUT)
