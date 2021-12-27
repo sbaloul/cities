@@ -5,7 +5,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
-        <b-navbar-nav v-if="true" class="ml-auto">
+        <b-navbar-nav class="ml-auto">
           <b-nav-form v-on:submit.prevent>
             <b-form-input
               v-model="name"
@@ -15,13 +15,14 @@
               @input="filter(name)"
             ></b-form-input>
           </b-nav-form>
-          <b-nav-item-dropdown right>
+          <b-nav-item-dropdown v-if="isLoggedIn()" right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <em>User</em>
+              <em>{{ user }}</em>
             </template>
-            <b-dropdown-item href="logout">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="/logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item v-else href="/login" right>Login</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -59,7 +60,11 @@
 </template>
 
 <script>
+import Vue from "vue";
+import VueCookies from 'vue-cookies';
 import CityCard from "@/components/CityCard.vue";
+
+Vue.use(VueCookies);
 
 export default {
   name: "Home",
@@ -73,10 +78,12 @@ export default {
       rows: 1,
       pageSize: 6,
       name: "",
+      user: ""
     };
   },
   mounted() {
     this.fetchData(this.currentPage, this.name);
+    this.user = this.$cookies.get("user");
   },
   methods: {
     fetchData(currentPage, name) {
@@ -104,6 +111,9 @@ export default {
     filter(name) {
       this.fetchData(1, name);
     },
+    isLoggedIn() {
+      return this.user;
+    }
   },
 };
 </script>
