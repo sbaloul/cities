@@ -5,6 +5,8 @@ import java.util.Objects;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,12 +37,6 @@ public class WebMvcConfigurerImp implements WebMvcConfigurer {
 					.addLogoutHandler(new LogoutHandlerImpl())
 				.and()
 				.authorizeHttpRequests()
-					.antMatchers(HttpMethod.PUT)
-					.authenticated()
-					.antMatchers("api/cities/*")
-					.hasRole("ALLOW_EDIT")
-				.and()
-				.authorizeHttpRequests()
 					.antMatchers((HttpMethod) null, "/login").permitAll()
 				.and()
 				.authorizeHttpRequests()
@@ -61,5 +57,10 @@ public class WebMvcConfigurerImp implements WebMvcConfigurer {
 			return Objects.equals(rawPassword, encodedPassword);
 		}
 
+	}
+	
+	@Configuration
+	@EnableGlobalMethodSecurity(prePostEnabled = true)
+	protected static class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 	}
 }
