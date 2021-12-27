@@ -9,7 +9,7 @@
         class="mb-2 b-card"
         md="3"
       >
-        <b-button id="show-btn" @click="showDialog">Open Modal</b-button>
+        <b-button v-if="this.hasEdit" id="show-btn" @click="showDialog" variant="outline-primary">Edit</b-button>
 
         <b-modal
           centered
@@ -53,11 +53,11 @@ import axios from "axios";
 
 export default {
   name: "CityCard",
-  props: ["id", "name", "photo"],
+  props: ["id", "name", "photo", "hasEdit"],
   data() {
     return {
       modalName: "",
-      modalPhoto: "",
+      modalPhoto: ""
     };
   },
   methods: {

@@ -38,6 +38,7 @@
           :id="city.id"
           :name="city.name"
           :photo="city.photo"
+          :hasEdit="hasEdit()"
         ></city-card>
         <!-- Use text in props -->
       </b-row>
@@ -78,12 +79,14 @@ export default {
       rows: 1,
       pageSize: 6,
       name: "",
-      user: ""
+      user: "",
+      edit: ""
     };
   },
   mounted() {
     this.fetchData(this.currentPage, this.name);
     this.user = this.$cookies.get("user");
+    this.edit = this.$cookies.get("hasEdit") === 'true';
   },
   methods: {
     fetchData(currentPage, name) {
@@ -99,7 +102,6 @@ export default {
       fetch("api/cities?" + query)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           this.cities = data.content;
           this.rows = data.totalElements;
           this.pageSize = data.size;
@@ -113,6 +115,9 @@ export default {
     },
     isLoggedIn() {
       return this.user;
+    },
+    hasEdit() {
+      return this.edit;
     }
   },
 };
