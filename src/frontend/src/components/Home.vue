@@ -1,17 +1,34 @@
 <template>
   <div class="home">
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="/">Cities</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-collapse id="nav-collapse" is-nav>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav v-if="true" class="ml-auto">
+          <b-nav-form v-on:submit.prevent>
+            <b-form-input
+              v-model="name"
+              size="sm"
+              class="mr-sm-2"
+              placeholder="Search"
+              @input="filter(name)"
+            ></b-form-input>
+          </b-nav-form>
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <em>User</em>
+            </template>
+            <b-dropdown-item href="logout">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <h1>Cities</h1>
     <b-container>
       <b-row class="mb-4 justify-content-md-center">
-        <b-col cols="8">
-          <b-form-input
-            v-model="name"
-            id="input-large"
-            size="lg"
-            placeholder="Filter"
-            @input="filter(name)"
-          ></b-form-input>
-        </b-col>
+        <b-col cols="8"> </b-col>
       </b-row>
       <b-row align-v="center">
         <city-card
@@ -69,7 +86,7 @@ export default {
       let query = new URLSearchParams({
         page: currentPage - 1,
         size: this.pageSize,
-        name: name
+        name: name,
       }).toString();
 
       fetch("api/cities?" + query)
@@ -86,7 +103,7 @@ export default {
     },
     filter(name) {
       this.fetchData(1, name);
-    }
+    },
   },
 };
 </script>
